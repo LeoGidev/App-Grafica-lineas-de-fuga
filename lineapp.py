@@ -21,7 +21,7 @@ class LineasDeFugaApp:
         
         # Crear un panel lateral para los controles
         control_panel = Frame(main_frame, width=600)
-        control_panel.pack(side=tk.RIGHT, fill=tk.Y)
+        control_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=1)
         
         # Crear escalas para controlar la densidad de líneas
         self.horizontal_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Lienas Paredes")
@@ -67,7 +67,7 @@ class LineasDeFugaApp:
             line_alpha = self.line_alpha_scale.get()
             
             # Dibujar punto de fuga
-            self.canvas.create_oval(x_fuga-5, y_fuga-5, x_fuga+5, y_fuga+5, fill="red")
+            self.canvas.create_oval(x_fuga-2, y_fuga-2, x_fuga+2, y_fuga+2, fill="red")
             
             # Dibujar líneas de fuga horizontales
             for y in range(0, self.height_px+1, int(self.dpi * horizontal_spacing)):
