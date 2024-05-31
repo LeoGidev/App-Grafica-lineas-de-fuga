@@ -13,3 +13,4 @@ class LineasDeFugaApp:
         self.canvas.bind("<Button-1>", self.obtener_punto_fuga)
         
         self.punto_fuga = None
+
