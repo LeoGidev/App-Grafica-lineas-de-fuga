@@ -51,8 +51,8 @@ class LineasDeFugaApp:
             
             # Dibujar líneas de fuga verticales
             for x in range(0, self.width_px+1, int(self.dpi * 0.5)):
-                self.canvas.create_line(x, 0, x_fuga, y_fuga, fill="blue")
-                self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill="blue")
+                self.canvas.create_line(x, 0, x_fuga, y_fuga, fill="red")
+                self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill="red")
     
     def guardar_imagen(self):
         if self.punto_fuga is None:
