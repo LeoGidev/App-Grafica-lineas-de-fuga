@@ -107,8 +107,8 @@ class LineasDeFugaApp:
             ax.plot([x, x_fuga], [0, y_fuga], color="red", linewidth=line_thickness, alpha=line_alpha)
             ax.plot([x, x_fuga], [self.height_px, y_fuga], color="red", linewidth=line_thickness, alpha=line_alpha)
         
-        # Dibujar punto de fuga
-        ax.plot(x_fuga, y_fuga, 'ro')
+        #Dibujar punto de fuga
+        ax.plot(x_fuga, y_fuga, 'ro', markersize=1)
 
         plt.axis('off')
         plt.gca().set_facecolor((0,0,0,0))  # Hacer el fondo transparente
