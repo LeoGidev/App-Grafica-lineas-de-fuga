@@ -79,6 +79,14 @@ class LineasDeFugaApp:
                 self.canvas.create_line(x, 0, x_fuga, y_fuga, fill="red", width=line_thickness)
                 self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill="red", width=line_thickness)
 
+             # Dibujar líneas verdes horizontales debajo del punto de fuga
+            for y in range(y_fuga, self.height_px+1, int(self.dpi * horizontal_spacing)):
+                self.canvas.create_line(0, y, self.width_px, y, fill="green", width=line_thickness)
+            
+            # Dibujar líneas rosadas horizontales encima del punto de fuga
+            for y in range(0, y_fuga, int(self.dpi * horizontal_spacing)):
+                self.canvas.create_line(0, y, self.width_px, y, fill="pink", width=line_thickness)
+
     def guardar_imagen(self):
         if self.punto_fuga is None:
             return
@@ -106,6 +114,14 @@ class LineasDeFugaApp:
         for x in range(0, self.width_px+1, int(self.dpi * vertical_spacing)):
             ax.plot([x, x_fuga], [0, y_fuga], color="red", linewidth=line_thickness, alpha=line_alpha)
             ax.plot([x, x_fuga], [self.height_px, y_fuga], color="red", linewidth=line_thickness, alpha=line_alpha)
+
+         # Dibujar líneas verdes horizontales debajo del punto de fuga
+        for y in range(y_fuga, self.height_px+1, int(self.dpi * horizontal_spacing)):
+            ax.plot([0, self.width_px], [y, y], color="green", linewidth=line_thickness, alpha=line_alpha)
+        
+        # Dibujar líneas rosadas horizontales encima del punto de fuga
+        for y in range(0, y_fuga, int(self.dpi * horizontal_spacing)):
+            ax.plot([0, self.width_px], [y, y], color="pink", linewidth=line_thickness, alpha=line_alpha)
         
         #Dibujar punto de fuga
         ax.plot(x_fuga, y_fuga, 'ro', markersize=1)
