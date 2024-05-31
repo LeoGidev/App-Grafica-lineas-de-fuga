@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 class LineasDeFugaApp:
-    def __init__(self, root, width_cm=20, height_cm=15, dpi=100):
+    def __init__(self, root, width_cm=10, height_cm=8, dpi=200):
         self.width_px = width_cm * dpi
         self.height_px = height_cm * dpi
         self.dpi = dpi
