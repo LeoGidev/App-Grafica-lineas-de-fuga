@@ -1,10 +1,10 @@
 import tkinter as tk
-from tkinter import Canvas, Frame, Button
+from tkinter import Canvas, Frame, Button, Scale, HORIZONTAL, Label
 import matplotlib.pyplot as plt
 import numpy as np
 
 class LineasDeFugaApp:
-    def __init__(self, root, width_cm=4, height_cm=4, dpi=200):
+    def __init__(self, root, width_cm=10, height_cm=8, dpi=200):
         self.width_px = width_cm * dpi
         self.height_px = height_cm * dpi
         self.dpi = dpi
@@ -22,6 +22,15 @@ class LineasDeFugaApp:
         # Crear un panel lateral para los controles
         control_panel = Frame(main_frame, width=200)
         control_panel.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        # Crear escalas para controlar la densidad de líneas
+        self.horizontal_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Espaciado Horizontal")
+        self.horizontal_scale.set(0.5)
+        self.horizontal_scale.pack(pady=10)
+        
+        self.vertical_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Espaciado Vertical")
+        self.vertical_scale.set(0.5)
+        self.vertical_scale.pack(pady=10)
         
         # Botón de ejemplo en el panel de control
         save_button = Button(control_panel, text="Guardar Imagen", command=self.guardar_imagen)
@@ -41,22 +50,30 @@ class LineasDeFugaApp:
             self.canvas.delete("all")
             x_fuga, y_fuga = self.punto_fuga
             
+            # Obtener los valores de espaciado de las escalas
+            horizontal_spacing = self.horizontal_scale.get()
+            vertical_spacing = self.vertical_scale.get()
+            
             # Dibujar punto de fuga
             self.canvas.create_oval(x_fuga-5, y_fuga-5, x_fuga+5, y_fuga+5, fill="red")
             
             # Dibujar líneas de fuga horizontales
-            for y in range(0, self.height_px+1, int(self.dpi * 0.5)):
+            for y in range(0, self.height_px+1, int(self.dpi * horizontal_spacing)):
                 self.canvas.create_line(0, y, x_fuga, y_fuga, fill="blue")
                 self.canvas.create_line(self.width_px, y, x_fuga, y_fuga, fill="blue")
             
             # Dibujar líneas de fuga verticales
-            for x in range(0, self.width_px+1, int(self.dpi * 0.5)):
-                self.canvas.create_line(x, 0, x_fuga, y_fuga, fill="red")
-                self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill="red")
+            for x in range(0, self.width_px+1, int(self.dpi * vertical_spacing)):
+                self.canvas.create_line(x, 0, x_fuga, y_fuga, fill="blue")
+                self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill="blue")
     
     def guardar_imagen(self):
         if self.punto_fuga is None:
             return
+        
+        # Obtener los valores de espaciado de las escalas
+        horizontal_spacing = self.horizontal_scale.get()
+        vertical_spacing = self.vertical_scale.get()
         
         fig, ax = plt.subplots(figsize=(self.width_px / self.dpi, self.height_px / self.dpi), dpi=self.dpi)
         ax.set_xlim(0, self.width_px)
@@ -66,12 +83,12 @@ class LineasDeFugaApp:
         x_fuga, y_fuga = self.punto_fuga
         
         # Dibujar líneas de fuga horizontales
-        for y in range(0, self.height_px+1, int(self.dpi * 0.5)):
+        for y in range(0, self.height_px+1, int(self.dpi * horizontal_spacing)):
             ax.plot([0, x_fuga], [y, y_fuga], color="blue")
             ax.plot([self.width_px, x_fuga], [y, y_fuga], color="blue")
         
         # Dibujar líneas de fuga verticales
-        for x in range(0, self.width_px+1, int(self.dpi * 0.5)):
+        for x in range(0, self.width_px+1, int(self.dpi * vertical_spacing)):
             ax.plot([x, x_fuga], [0, y_fuga], color="blue")
             ax.plot([x, x_fuga], [self.height_px, y_fuga], color="blue")
         
@@ -84,6 +101,7 @@ class LineasDeFugaApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = LineasDeFugaApp(root, width_cm=4, height_cm=4, dpi=100)
+    app = LineasDeFugaApp(root, width_cm=20, height_cm=15, dpi=100)
     root.mainloop()
+
 
