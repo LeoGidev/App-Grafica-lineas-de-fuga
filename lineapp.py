@@ -35,3 +35,8 @@ class LineasDeFugaApp:
             for x in range(0, 801, 50):
                 self.canvas.create_line(x, 0, x_fuga, y_fuga, fill="blue")
                 self.canvas.create_line(x, 600, x_fuga, y_fuga, fill="blue")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = LineasDeFugaApp(root)
+    root.mainloop()
