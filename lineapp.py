@@ -84,6 +84,6 @@ class LineasDeFugaApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = LineasDeFugaApp(root, width_cm=4, height_cm=4, dpi=200)
+    app = LineasDeFugaApp(root, width_cm=4, height_cm=4, dpi=100)
     root.mainloop()
 
