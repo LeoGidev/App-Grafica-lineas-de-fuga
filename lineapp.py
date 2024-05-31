@@ -33,8 +33,8 @@ class LineasDeFugaApp:
         self.vertical_scale.pack(pady=10)
         
         # Crear escalas para controlar el grosor de las líneas
-        self.line_thickness_scale = Scale(control_panel, from_=0.5, to=5, resolution=0.1, orient=HORIZONTAL, label="Grosor de Línea")
-        self.line_thickness_scale.set(1)
+        self.line_thickness_scale = Scale(control_panel, from_=0.1, to=3, resolution=0.1, orient=HORIZONTAL, label="Grosor de Línea")
+        self.line_thickness_scale.set(0.1)
         self.line_thickness_scale.pack(pady=10)
         
         # Crear escalas para controlar la transparencia de las líneas
@@ -71,21 +71,13 @@ class LineasDeFugaApp:
             
             # Dibujar líneas de fuga horizontales
             for y in range(0, self.height_px+1, int(self.dpi * horizontal_spacing)):
-                self.canvas.create_line(0, y, x_fuga, y_fuga, fill=self._color_with_alpha("blue", line_alpha), width=line_thickness)
-                self.canvas.create_line(self.width_px, y, x_fuga, y_fuga, fill=self._color_with_alpha("blue", line_alpha), width=line_thickness)
+                self.canvas.create_line(0, y, x_fuga, y_fuga, fill="blue", width=line_thickness)
+                self.canvas.create_line(self.width_px, y, x_fuga, y_fuga, fill="blue", width=line_thickness)
             
             # Dibujar líneas de fuga verticales
             for x in range(0, self.width_px+1, int(self.dpi * vertical_spacing)):
-                self.canvas.create_line(x, 0, x_fuga, y_fuga, fill=self._color_with_alpha("red", line_alpha), width=line_thickness)
-                self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill=self._color_with_alpha("red", line_alpha), width=line_thickness)
-    
-    def _color_with_alpha(self, color, alpha):
-        """Devuelve un color en formato hexadecimal con un valor alfa."""
-        r, g, b = self.canvas.winfo_rgb(color)
-        r = r // 256
-        g = g // 256
-        b = b // 256
-        return f'#{r:02x}{g:02x}{b:02x}{int(alpha*255):02x}'
+                self.canvas.create_line(x, 0, x_fuga, y_fuga, fill="red", width=line_thickness)
+                self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill="red", width=line_thickness)
 
     def guardar_imagen(self):
         if self.punto_fuga is None:
@@ -127,6 +119,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = LineasDeFugaApp(root, width_cm=4, height_cm=3, dpi=200)
     root.mainloop()
+
 
 
 
