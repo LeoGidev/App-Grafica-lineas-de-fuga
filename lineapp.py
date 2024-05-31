@@ -14,3 +14,6 @@ class LineasDeFugaApp:
         
         self.punto_fuga = None
 
+def obtener_punto_fuga(self, event):
+        self.punto_fuga = (event.x, event.y)
+        self.dibujar_lineas_de_fuga()
