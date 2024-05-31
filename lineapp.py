@@ -67,7 +67,7 @@ class LineasDeFugaApp:
             line_alpha = self.line_alpha_scale.get()
             
             # Dibujar punto de fuga
-            self.canvas.create_oval(x_fuga-2, y_fuga-2, x_fuga+2, y_fuga+2, fill="red")
+            self.canvas.create_oval(x_fuga-1, y_fuga-1, x_fuga+1, y_fuga+1, fill="green")
             
             # Dibujar líneas de fuga horizontales
             for y in range(0, self.height_px+1, int(self.dpi * horizontal_spacing)):
