@@ -103,7 +103,7 @@ class LineasDeFugaApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = LineasDeFugaApp(root, width_cm=4, height_cm=4, dpi=100)
+    app = LineasDeFugaApp(root, width_cm=4.5, height_cm=3, dpi=200)
     root.mainloop()
 
 
