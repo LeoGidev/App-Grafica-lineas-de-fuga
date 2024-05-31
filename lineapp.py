@@ -1,23 +1,27 @@
 import tkinter as tk
 from tkinter import Canvas
 import matplotlib.pyplot as plt
+import numpy as np
 
 class LineasDeFugaApp:
-    def __init__(self, root):
+    def __init__(self, root, width_cm=20, height_cm=15, dpi=100):
+        self.width_px = width_cm * dpi
+        self.height_px = height_cm * dpi
+        self.dpi = dpi
         self.root = root
         self.root.title("Líneas de Fuga para Bocetos de Ciudades")
         
-        self.canvas = Canvas(root, width=800, height=600, bg="white")
+        self.canvas = Canvas(root, width=self.width_px, height=self.height_px, bg="white")
         self.canvas.pack()
         
         self.canvas.bind("<Button-1>", self.obtener_punto_fuga)
         
         self.punto_fuga = None
-
+    
     def obtener_punto_fuga(self, event):
-            self.punto_fuga = (event.x, event.y)
-            self.dibujar_lineas_de_fuga()
-
+        self.punto_fuga = (event.x, event.y)
+        self.dibujar_lineas_de_fuga()
+    
     def dibujar_lineas_de_fuga(self):
         if self.punto_fuga:
             self.canvas.delete("all")
@@ -27,16 +31,43 @@ class LineasDeFugaApp:
             self.canvas.create_oval(x_fuga-5, y_fuga-5, x_fuga+5, y_fuga+5, fill="red")
             
             # Dibujar líneas de fuga horizontales
-            for y in range(0, 601, 50):
+            for y in range(0, self.height_px+1, int(self.dpi * 0.5)):
                 self.canvas.create_line(0, y, x_fuga, y_fuga, fill="blue")
-                self.canvas.create_line(800, y, x_fuga, y_fuga, fill="blue")
+                self.canvas.create_line(self.width_px, y, x_fuga, y_fuga, fill="blue")
             
             # Dibujar líneas de fuga verticales
-            for x in range(0, 801, 50):
+            for x in range(0, self.width_px+1, int(self.dpi * 0.5)):
                 self.canvas.create_line(x, 0, x_fuga, y_fuga, fill="blue")
-                self.canvas.create_line(x, 600, x_fuga, y_fuga, fill="blue")
+                self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill="blue")
+            
+            self.guardar_imagen()
+
+    def guardar_imagen(self):
+        fig, ax = plt.subplots(figsize=(self.width_px / self.dpi, self.height_px / self.dpi), dpi=self.dpi)
+        ax.set_xlim(0, self.width_px)
+        ax.set_ylim(0, self.height_px)
+        ax.invert_yaxis()
+
+        x_fuga, y_fuga = self.punto_fuga
+        
+        # Dibujar líneas de fuga horizontales
+        for y in range(0, self.height_px+1, int(self.dpi * 0.5)):
+            ax.plot([0, x_fuga], [y, y_fuga], color="blue")
+            ax.plot([self.width_px, x_fuga], [y, y_fuga], color="blue")
+        
+        # Dibujar líneas de fuga verticales
+        for x in range(0, self.width_px+1, int(self.dpi * 0.5)):
+            ax.plot([x, x_fuga], [0, y_fuga], color="blue")
+            ax.plot([x, x_fuga], [self.height_px, y_fuga], color="blue")
+        
+        # Dibujar punto de fuga
+        ax.plot(x_fuga, y_fuga, 'ro')
+
+        plt.axis('off')
+        plt.savefig('lineas_de_fuga.png', bbox_inches='tight', pad_inches=0)
+        plt.close(fig)
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = LineasDeFugaApp(root)
+    app = LineasDeFugaApp(root, width_cm=20, height_cm=15, dpi=100)
     root.mainloop()
