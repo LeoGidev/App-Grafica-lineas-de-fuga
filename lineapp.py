@@ -20,7 +20,7 @@ class LineasDeFugaApp:
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
         
         # Crear un panel lateral para los controles
-        control_panel = Frame(main_frame, width=400)
+        control_panel = Frame(main_frame, width=600)
         control_panel.pack(side=tk.RIGHT, fill=tk.Y)
         
         # Crear escalas para controlar la densidad de líneas
