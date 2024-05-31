@@ -20,15 +20,15 @@ class LineasDeFugaApp:
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
         
         # Crear un panel lateral para los controles
-        control_panel = Frame(main_frame, width=200)
+        control_panel = Frame(main_frame, width=400)
         control_panel.pack(side=tk.RIGHT, fill=tk.Y)
         
         # Crear escalas para controlar la densidad de líneas
-        self.horizontal_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Espaciado Horizontal")
+        self.horizontal_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Lienas Paredes")
         self.horizontal_scale.set(0.5)
         self.horizontal_scale.pack(pady=10)
         
-        self.vertical_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Espaciado Vertical")
+        self.vertical_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Líneas Techo/Piso")
         self.vertical_scale.set(0.5)
         self.vertical_scale.pack(pady=10)
         
