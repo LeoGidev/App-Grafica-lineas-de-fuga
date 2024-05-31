@@ -79,6 +79,7 @@ class LineasDeFugaApp:
         ax.set_xlim(0, self.width_px)
         ax.set_ylim(0, self.height_px)
         ax.invert_yaxis()
+        ax.set_axis_off()
 
         x_fuga, y_fuga = self.punto_fuga
         
@@ -89,19 +90,21 @@ class LineasDeFugaApp:
         
         # Dibujar líneas de fuga verticales
         for x in range(0, self.width_px+1, int(self.dpi * vertical_spacing)):
-            ax.plot([x, x_fuga], [0, y_fuga], color="blue")
-            ax.plot([x, x_fuga], [self.height_px, y_fuga], color="blue")
+            ax.plot([x, x_fuga], [0, y_fuga], color="red")
+            ax.plot([x, x_fuga], [self.height_px, y_fuga], color="red")
         
         # Dibujar punto de fuga
         ax.plot(x_fuga, y_fuga, 'ro')
 
         plt.axis('off')
-        plt.savefig('lineas_de_fuga.png', bbox_inches='tight', pad_inches=0)
+        plt.gca().set_facecolor((0,0,0,0))  # Hacer el fondo transparente
+        plt.savefig('lineas_de_fuga.png', bbox_inches='tight', pad_inches=0, transparent=True)
         plt.close(fig)
 
 if __name__ == "__main__":
     root = tk.Tk()
     app = LineasDeFugaApp(root, width_cm=4, height_cm=4, dpi=100)
     root.mainloop()
+
 
 
