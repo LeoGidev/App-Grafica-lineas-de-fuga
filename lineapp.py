@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Canvas
+from tkinter import Canvas, Frame, Button
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -11,9 +11,23 @@ class LineasDeFugaApp:
         self.root = root
         self.root.title("Líneas de Fuga para Bocetos de Ciudades")
         
-        self.canvas = Canvas(root, width=self.width_px, height=self.height_px, bg="white")
-        self.canvas.pack()
+        # Crear un marco principal
+        main_frame = Frame(root)
+        main_frame.pack(fill=tk.BOTH, expand=1)
         
+        # Crear un lienzo de dibujo
+        self.canvas = Canvas(main_frame, width=self.width_px, height=self.height_px, bg="white")
+        self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+        
+        # Crear un panel lateral para los controles
+        control_panel = Frame(main_frame, width=200)
+        control_panel.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        # Botón de ejemplo en el panel de control
+        save_button = Button(control_panel, text="Guardar Imagen", command=self.guardar_imagen)
+        save_button.pack(pady=10)
+        
+        # Vincular evento de clic en el lienzo
         self.canvas.bind("<Button-1>", self.obtener_punto_fuga)
         
         self.punto_fuga = None
@@ -39,10 +53,11 @@ class LineasDeFugaApp:
             for x in range(0, self.width_px+1, int(self.dpi * 0.5)):
                 self.canvas.create_line(x, 0, x_fuga, y_fuga, fill="blue")
                 self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill="blue")
-            
-            self.guardar_imagen()
-
+    
     def guardar_imagen(self):
+        if self.punto_fuga is None:
+            return
+        
         fig, ax = plt.subplots(figsize=(self.width_px / self.dpi, self.height_px / self.dpi), dpi=self.dpi)
         ax.set_xlim(0, self.width_px)
         ax.set_ylim(0, self.height_px)
@@ -71,3 +86,4 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = LineasDeFugaApp(root, width_cm=20, height_cm=15, dpi=100)
     root.mainloop()
+
