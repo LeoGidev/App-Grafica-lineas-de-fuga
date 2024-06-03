@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Canvas, Frame, Button, Scale, HORIZONTAL, Label
+from tkinter import Canvas, Frame, Button, Scale, HORIZONTAL, Label, colorchooser, ttk
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -24,7 +24,7 @@ class LineasDeFugaApp:
         control_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=1)
         
         # Crear escalas para controlar la densidad de líneas
-        self.horizontal_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Lienas Paredes")
+        self.horizontal_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Líneas Paredes")
         self.horizontal_scale.set(0.5)
         self.horizontal_scale.pack(pady=10)
         
@@ -41,6 +41,21 @@ class LineasDeFugaApp:
         self.line_alpha_scale = Scale(control_panel, from_=0.1, to=1.0, resolution=0.1, orient=HORIZONTAL, label="Transparencia de Línea")
         self.line_alpha_scale.set(1)
         self.line_alpha_scale.pack(pady=10)
+        
+        # Selector de color
+        self.color_var = tk.StringVar(value="blue")
+        self.color_options = ["blue", "red", "green", "pink", "black"]
+        Label(control_panel, text="Color de Línea").pack(pady=10)
+        self.color_menu = ttk.Combobox(control_panel, textvariable=self.color_var, values=self.color_options)
+        self.color_menu.pack(pady=10)
+        
+        # Botón para cambiar el color de fondo
+        bg_button = Button(control_panel, text="Cambiar Fondo", command=self.cambiar_fondo)
+        bg_button.pack(pady=10)
+        
+        # Botón para limpiar el lienzo
+        clear_button = Button(control_panel, text="Limpiar Lienzo", command=self.limpiar_lienzo)
+        clear_button.pack(pady=10)
         
         # Botón para guardar la imagen
         save_button = Button(control_panel, text="Guardar Imagen", command=self.guardar_imagen)
@@ -65,27 +80,37 @@ class LineasDeFugaApp:
             vertical_spacing = self.vertical_scale.get()
             line_thickness = self.line_thickness_scale.get()
             line_alpha = self.line_alpha_scale.get()
+            color = self.color_var.get()
             
             # Dibujar punto de fuga
             self.canvas.create_oval(x_fuga, y_fuga, x_fuga+1, y_fuga+1, fill="green")
             
             # Dibujar líneas de fuga horizontales
             for y in range(0, self.height_px+1, int(self.dpi * horizontal_spacing)):
-                self.canvas.create_line(0, y, x_fuga, y_fuga, fill="blue", width=line_thickness)
-                self.canvas.create_line(self.width_px, y, x_fuga, y_fuga, fill="blue", width=line_thickness)
+                self.canvas.create_line(0, y, x_fuga, y_fuga, fill=color, width=line_thickness)
+                self.canvas.create_line(self.width_px, y, x_fuga, y_fuga, fill=color, width=line_thickness)
             
             # Dibujar líneas de fuga verticales
             for x in range(0, self.width_px+1, int(self.dpi * vertical_spacing)):
-                self.canvas.create_line(x, 0, x_fuga, y_fuga, fill="red", width=line_thickness)
-                self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill="red", width=line_thickness)
-
-             # Dibujar líneas verdes horizontales debajo del punto de fuga
+                self.canvas.create_line(x, 0, x_fuga, y_fuga, fill=color, width=line_thickness)
+                self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill=color, width=line_thickness)
+            
+            # Dibujar líneas verdes horizontales debajo del punto de fuga
             for y in range(y_fuga, self.height_px+1, int(self.dpi * horizontal_spacing)):
                 self.canvas.create_line(0, y, self.width_px, y, fill="green", width=line_thickness)
             
             # Dibujar líneas rosadas horizontales encima del punto de fuga
             for y in range(0, y_fuga, int(self.dpi * horizontal_spacing)):
                 self.canvas.create_line(0, y, self.width_px, y, fill="pink", width=line_thickness)
+
+    def cambiar_fondo(self):
+        color = colorchooser.askcolor()[1]
+        if color:
+            self.canvas.config(bg=color)
+
+    def limpiar_lienzo(self):
+        self.canvas.delete("all")
+        self.punto_fuga = None
 
     def guardar_imagen(self):
         if self.punto_fuga is None:
@@ -96,6 +121,7 @@ class LineasDeFugaApp:
         vertical_spacing = self.vertical_scale.get()
         line_thickness = self.line_thickness_scale.get()
         line_alpha = self.line_alpha_scale.get()
+        color = self.color_var.get()
         
         fig, ax = plt.subplots(figsize=(self.width_px / self.dpi, self.height_px / self.dpi), dpi=self.dpi)
         ax.set_xlim(0, self.width_px)
@@ -107,15 +133,15 @@ class LineasDeFugaApp:
         
         # Dibujar líneas de fuga horizontales
         for y in range(0, self.height_px+1, int(self.dpi * horizontal_spacing)):
-            ax.plot([0, x_fuga], [y, y_fuga], color="blue", linewidth=line_thickness, alpha=line_alpha)
-            ax.plot([self.width_px, x_fuga], [y, y_fuga], color="blue", linewidth=line_thickness, alpha=line_alpha)
+            ax.plot([0, x_fuga], [y, y_fuga], color=color, linewidth=line_thickness, alpha=line_alpha)
+            ax.plot([self.width_px, x_fuga], [y, y_fuga], color=color, linewidth=line_thickness, alpha=line_alpha)
         
         # Dibujar líneas de fuga verticales
         for x in range(0, self.width_px+1, int(self.dpi * vertical_spacing)):
-            ax.plot([x, x_fuga], [0, y_fuga], color="red", linewidth=line_thickness, alpha=line_alpha)
-            ax.plot([x, x_fuga], [self.height_px, y_fuga], color="red", linewidth=line_thickness, alpha=line_alpha)
-
-         # Dibujar líneas verdes horizontales debajo del punto de fuga
+            ax.plot([x, x_fuga], [0, y_fuga], color=color, linewidth=line_thickness, alpha=line_alpha)
+            ax.plot([x, x_fuga], [self.height_px, y_fuga], color=color, linewidth=line_thickness, alpha=line_alpha)
+        
+        # Dibujar líneas verdes horizontales debajo del punto de fuga
         for y in range(y_fuga, self.height_px+1, int(self.dpi * horizontal_spacing)):
             ax.plot([0, self.width_px], [y, y], color="green", linewidth=line_thickness, alpha=line_alpha)
         
@@ -123,7 +149,7 @@ class LineasDeFugaApp:
         for y in range(0, y_fuga, int(self.dpi * horizontal_spacing)):
             ax.plot([0, self.width_px], [y, y], color="pink", linewidth=line_thickness, alpha=line_alpha)
         
-        #Dibujar punto de fuga
+        # Dibujar punto de fuga
         ax.plot(x_fuga, y_fuga, 'ro', markersize=1)
 
         plt.axis('off')
