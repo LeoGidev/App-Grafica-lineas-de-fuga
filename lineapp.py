@@ -151,7 +151,29 @@ class LineasDeFugaApp:
         for y in range(y_fuga, self.height_px+1, int(self.dpi * horizontal_spacing)):
             left_intercept_x = x_fuga - (x_fuga * (y - y_fuga) / y_fuga)
             right_intercept_x = x_fuga + ((self.width_px - x_fuga) * (y - y_fuga) / y_fuga)
-            if left_intercept_x >= 0 and right_intercept_x
+            if left_intercept_x >= 0 and right_intercept_x <= self.width_px:
+                ax.plot([left_intercept_x, right_intercept_x], [y, y], color="green", linewidth=line_thickness, alpha=line_alpha)
+        
+        # Dibujar líneas rosadas horizontales encima del punto de fuga dentro del triángulo
+        for y in range(0, y_fuga, int(self.dpi * horizontal_spacing)):
+            left_intercept_x = x_fuga - (x_fuga * (y_fuga - y) / y_fuga)
+            right_intercept_x = x_fuga + ((self.width_px - x_fuga) * (y_fuga - y) / y_fuga)
+            if left_intercept_x >= 0 and right_intercept_x <= self.width_px:
+                ax.plot([left_intercept_x, right_intercept_x], [y, y], color="pink", linewidth=line_thickness, alpha=line_alpha)
+        
+        # Dibujar punto de fuga
+        ax.plot(x_fuga, y_fuga, 'ro', markersize=1)
+
+        plt.axis('off')
+        plt.gca().set_facecolor((0,0,0,0))  # Hacer el fondo transparente
+        plt.savefig('lineas_de_fuga.png', bbox_inches='tight', pad_inches=0, transparent=True)
+        plt.close(fig)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = LineasDeFugaApp(root, width_cm=4, height_cm=3, dpi=200)
+    root.mainloop()
+
 
 
 
