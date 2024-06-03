@@ -43,7 +43,7 @@ class LineasDeFugaApp:
         self.line_alpha_scale.pack(pady=10)
         
         # Selector de color
-        self.color_var = tk.StringVar(value="blue")
+        self.color_var = tk.StringVar(value="red")
         self.color_options = ["blue", "red", "green", "pink", "black"]
         Label(control_panel, text="Color de Línea").pack(pady=10)
         self.color_menu = ttk.Combobox(control_panel, textvariable=self.color_var, values=self.color_options)
@@ -87,12 +87,12 @@ class LineasDeFugaApp:
             
             # Dibujar líneas de fuga horizontales
             for y in range(0, self.height_px+1, int(self.dpi * horizontal_spacing)):
-                self.canvas.create_line(0, y, x_fuga, y_fuga, fill=color, width=line_thickness)
+                self.canvas.create_line(0, y, x_fuga, y_fuga, fill="black", width=line_thickness)
                 self.canvas.create_line(self.width_px, y, x_fuga, y_fuga, fill="black", width=line_thickness)
             
             # Dibujar líneas de fuga verticales
             for x in range(0, self.width_px+1, int(self.dpi * vertical_spacing)):
-                self.canvas.create_line(x, 0, x_fuga, y_fuga, fill=color, width=line_thickness)
+                self.canvas.create_line(x, 0, x_fuga, y_fuga, fill="red", width=line_thickness)
                 self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill="red", width=line_thickness)
             
             # Dibujar líneas verdes horizontales debajo del punto de fuga dentro del triángulo
@@ -107,7 +107,7 @@ class LineasDeFugaApp:
                 left_intercept_x = x_fuga - (x_fuga * (y_fuga - y) / y_fuga)
                 right_intercept_x = x_fuga + ((self.width_px - x_fuga) * (y_fuga - y) / y_fuga)
                 if left_intercept_x >= 0 and right_intercept_x <= self.width_px:
-                    self.canvas.create_line(left_intercept_x, y, right_intercept_x, y, fill="yelow", width=line_thickness)
+                    self.canvas.create_line(left_intercept_x, y, right_intercept_x, y, fill="yellow", width=line_thickness)
 
     def cambiar_fondo(self):
         color = colorchooser.askcolor()[1]
