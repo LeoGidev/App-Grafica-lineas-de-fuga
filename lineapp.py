@@ -100,14 +100,14 @@ class LineasDeFugaApp:
                 left_intercept_x = x_fuga - (x_fuga * (y - y_fuga) / y_fuga)
                 right_intercept_x = x_fuga + ((self.width_px - x_fuga) * (y - y_fuga) / y_fuga)
                 if left_intercept_x >= 0 and right_intercept_x <= self.width_px:
-                    self.canvas.create_line(left_intercept_x, y, right_intercept_x, y, fill="blue", width=line_thickness)
+                    self.canvas.create_line(left_intercept_x, y, right_intercept_x, y, fill="green", width=line_thickness)
             
             # Dibujar líneas rosadas horizontales encima del punto de fuga dentro del triángulo
             for y in range(0, y_fuga, int(self.dpi * horizontal_spacing)):
                 left_intercept_x = x_fuga - (x_fuga * (y_fuga - y) / y_fuga)
                 right_intercept_x = x_fuga + ((self.width_px - x_fuga) * (y_fuga - y) / y_fuga)
                 if left_intercept_x >= 0 and right_intercept_x <= self.width_px:
-                    self.canvas.create_line(left_intercept_x, y, right_intercept_x, y, fill="blue", width=line_thickness)
+                    self.canvas.create_line(left_intercept_x, y, right_intercept_x, y, fill="yelow", width=line_thickness)
 
     def cambiar_fondo(self):
         color = colorchooser.askcolor()[1]
