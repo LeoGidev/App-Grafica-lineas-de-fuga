@@ -24,11 +24,11 @@ class LineasDeFugaApp:
         control_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=1)
         
         # Crear escalas para controlar la densidad de líneas
-        self.horizontal_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Líneas Paredes")
+        self.horizontal_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Espacio Paredes")
         self.horizontal_scale.set(0.5)
         self.horizontal_scale.pack(pady=10)
         
-        self.vertical_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Líneas Techo/Piso")
+        self.vertical_scale = Scale(control_panel, from_=1, to=0.1, resolution=0.1, orient=HORIZONTAL, label="Espacio Techo/Piso")
         self.vertical_scale.set(0.5)
         self.vertical_scale.pack(pady=10)
         
