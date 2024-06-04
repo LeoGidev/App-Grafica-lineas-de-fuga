@@ -151,7 +151,7 @@ class LineasDeFugaApp:
         for y in range(y_fuga, self.height_px+1, int(self.dpi * horizontal_spacing)):
             left_intercept_x = x_fuga
             right_intercept_x = x_fuga 
-            if left_intercept_x >= 0 and right_intercept_x <= self.width_px:
+            if left_intercept_x == 0 and right_intercept_x <= self.width_px:
                 ax.plot([left_intercept_x, right_intercept_x], [y, y], color="green", linewidth=line_thickness, alpha=line_alpha)
         
         # Dibujar líneas rosadas horizontales encima del punto de fuga dentro del triángulo
