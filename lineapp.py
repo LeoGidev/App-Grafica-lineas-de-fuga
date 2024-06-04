@@ -87,8 +87,8 @@ class LineasDeFugaApp:
             
             # Dibujar líneas de fuga horizontales
             for y in range(0, self.height_px+1, int(self.dpi * horizontal_spacing)):
-                self.canvas.create_line(0, y, x_fuga, y_fuga, fill="black", width=line_thickness)
-                self.canvas.create_line(self.width_px, y, x_fuga, y_fuga, fill="black", width=line_thickness)
+                self.canvas.create_line(0, y, x_fuga, y_fuga, fill="blue", width=line_thickness)
+                self.canvas.create_line(self.width_px, y, x_fuga, y_fuga, fill="blue", width=line_thickness)
             
             # Dibujar líneas de fuga verticales
             for x in range(0, self.width_px+1, int(self.dpi * vertical_spacing)):
@@ -108,7 +108,7 @@ class LineasDeFugaApp:
                 left_intercept_x = x_fuga - (x_fuga * (y_fuga - y) / y_fuga)
                 right_intercept_x = x_fuga + ((self.width_px - x_fuga) * (y_fuga - y) / y_fuga)
                 if left_intercept_x >= 0 and right_intercept_x <= self.width_px:
-                    self.canvas.create_line(right_intercept_x, y, left_intercept_x, y, fill="yellow", width=line_thickness)
+                    self.canvas.create_line(right_intercept_x, y, left_intercept_x, y, fill="red", width=line_thickness)
 
     def cambiar_fondo(self):
         color = colorchooser.askcolor()[1]
@@ -141,7 +141,7 @@ class LineasDeFugaApp:
         # Dibujar líneas de fuga horizontales
         for y in range(0, self.height_px+1, int(self.dpi * horizontal_spacing)):
             ax.plot([0, x_fuga], [y, y_fuga], color=color, linewidth=line_thickness, alpha=line_alpha)
-            ax.plot([self.width_px, x_fuga], [y, y_fuga], color=color, linewidth=line_thickness, alpha=line_alpha)
+            ax.plot([self.width_px, x_fuga], [y, y_fuga], color="blue", linewidth=line_thickness, alpha=line_alpha)
         
         # Dibujar líneas de fuga verticales
         for x in range(0, self.width_px+1, int(self.dpi * vertical_spacing)):
@@ -161,7 +161,7 @@ class LineasDeFugaApp:
             left_intercept_x = x_fuga - (x_fuga * (y_fuga - y) / y_fuga)
             right_intercept_x = x_fuga + ((self.width_px - x_fuga) * (y_fuga - y) / y_fuga)
             if left_intercept_x >= 0 and right_intercept_x <= self.width_px:
-                ax.plot([left_intercept_x, right_intercept_x], [y, y], color="pink", linewidth=line_thickness, alpha=line_alpha)
+                ax.plot([left_intercept_x, right_intercept_x], [y, y], color="green", linewidth=line_thickness, alpha=line_alpha)
         
         # Dibujar punto de fuga
         ax.plot(x_fuga, y_fuga, 'ro', markersize=1)
