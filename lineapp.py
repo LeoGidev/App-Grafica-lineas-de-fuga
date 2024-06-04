@@ -53,7 +53,7 @@ class LineasDeFugaApp:
         self.color_varB = tk.StringVar(value="blue")
         self.color_optionsB = ["blue", "red", "green", "pink", "black"]
         Label(control_panel, text="Color de Línea Paredes").pack(pady=10)
-        self.color_menuB = ttk.Combobox(control_panel, textvariable=self.color_var, values=self.color_options)
+        self.color_menuB = ttk.Combobox(control_panel, textvariable=self.color_varB, values=self.color_optionsB)
         self.color_menuB.pack(pady=10)
         
         # Botón para cambiar el color de fondo
@@ -88,14 +88,15 @@ class LineasDeFugaApp:
             line_thickness = self.line_thickness_scale.get()
             line_alpha = self.line_alpha_scale.get()
             color = self.color_var.get()
+            colorB = self.color_varB.get()
             
             # Dibujar punto de fuga
             self.canvas.create_oval(x_fuga, y_fuga, x_fuga+1, y_fuga+1, fill="green")
             
             # Dibujar líneas de fuga horizontales
             for y in range(0, self.height_px+1, int(self.dpi * horizontal_spacing)):
-                self.canvas.create_line(0, y, x_fuga, y_fuga, fill="blue", width=line_thickness)
-                self.canvas.create_line(self.width_px, y, x_fuga, y_fuga, fill="blue", width=line_thickness)
+                self.canvas.create_line(0, y, x_fuga, y_fuga, fill=colorB, width=line_thickness)
+                self.canvas.create_line(self.width_px, y, x_fuga, y_fuga, fill=colorB, width=line_thickness)
             
             # Dibujar líneas de fuga verticales
             for x in range(0, self.width_px+1, int(self.dpi * vertical_spacing)):
