@@ -45,16 +45,16 @@ class LineasDeFugaApp:
         # Selector de color A
         self.color_var = tk.StringVar(value="red")
         self.color_options = ["blue", "red", "green", "pink", "black"]
-        Label(control_panel, text="Color de Línea").pack(pady=10)
+        Label(control_panel, text="Color de Línea techo/piso").pack(pady=10)
         self.color_menu = ttk.Combobox(control_panel, textvariable=self.color_var, values=self.color_options)
         self.color_menu.pack(pady=10)
 
          # Selector de color B
-        self.color_var = tk.StringVar(value="red")
-        self.color_options = ["blue", "red", "green", "pink", "black"]
-        Label(control_panel, text="Color de Línea").pack(pady=10)
-        self.color_menu = ttk.Combobox(control_panel, textvariable=self.color_var, values=self.color_options)
-        self.color_menu.pack(pady=10)
+        self.color_varB = tk.StringVar(value="blue")
+        self.color_optionsB = ["blue", "red", "green", "pink", "black"]
+        Label(control_panel, text="Color de Línea Paredes").pack(pady=10)
+        self.color_menuB = ttk.Combobox(control_panel, textvariable=self.color_var, values=self.color_options)
+        self.color_menuB.pack(pady=10)
         
         # Botón para cambiar el color de fondo
         bg_button = Button(control_panel, text="Cambiar Fondo", command=self.cambiar_fondo)
