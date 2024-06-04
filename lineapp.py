@@ -42,7 +42,14 @@ class LineasDeFugaApp:
         self.line_alpha_scale.set(1)
         self.line_alpha_scale.pack(pady=10)
         
-        # Selector de color
+        # Selector de color A
+        self.color_var = tk.StringVar(value="red")
+        self.color_options = ["blue", "red", "green", "pink", "black"]
+        Label(control_panel, text="Color de Línea").pack(pady=10)
+        self.color_menu = ttk.Combobox(control_panel, textvariable=self.color_var, values=self.color_options)
+        self.color_menu.pack(pady=10)
+
+         # Selector de color B
         self.color_var = tk.StringVar(value="red")
         self.color_options = ["blue", "red", "green", "pink", "black"]
         Label(control_panel, text="Color de Línea").pack(pady=10)
