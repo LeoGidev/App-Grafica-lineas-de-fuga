@@ -137,6 +137,7 @@ class LineasDeFugaApp:
         line_thickness = self.line_thickness_scale.get()
         line_alpha = self.line_alpha_scale.get()
         color = self.color_var.get()
+        colorB = self.color_varB.get()
         
         fig, ax = plt.subplots(figsize=(self.width_px / self.dpi, self.height_px / self.dpi), dpi=self.dpi)
         ax.set_xlim(0, self.width_px)
@@ -149,7 +150,7 @@ class LineasDeFugaApp:
         # Dibujar líneas de fuga horizontales
         for y in range(0, self.height_px+1, int(self.dpi * horizontal_spacing)):
             ax.plot([0, x_fuga], [y, y_fuga], color=color, linewidth=line_thickness, alpha=line_alpha)
-            ax.plot([self.width_px, x_fuga], [y, y_fuga], color="blue", linewidth=line_thickness, alpha=line_alpha)
+            ax.plot([self.width_px, x_fuga], [y, y_fuga], color=colorB, linewidth=line_thickness, alpha=line_alpha)
         
         # Dibujar líneas de fuga verticales
         for x in range(0, self.width_px+1, int(self.dpi * vertical_spacing)):
