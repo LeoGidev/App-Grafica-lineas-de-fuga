@@ -104,6 +104,11 @@ class LineasDeFugaApp:
                 self.canvas.create_line(x, self.height_px, x_fuga, y_fuga, fill=color, width=line_thickness)
             
             #dibujar lienas verticales
+            for y in range(x_fuga, self.height_py+1, int(self.dpi * horizontal_spacing)):
+                top_intercept_y = x_fuga - (x_fuga * (y - y_fuga) / (self.height_px - y_fuga))
+                bottom = x_fuga + ((self.width_px - x_fuga) * (y - y_fuga) / (self.height_px - y_fuga))
+                if left_intercept_x >= 0 and right_intercept_x <= self.width_px:
+                    self.canvas.create_line(left_intercept_x, y, right_intercept_x, y, fill="green", width=line_thickness)
             
             # Dibujar líneas verdes horizontales debajo del punto de fuga dentro del triángulo
             for y in range(y_fuga, self.height_px+1, int(self.dpi * horizontal_spacing)):
